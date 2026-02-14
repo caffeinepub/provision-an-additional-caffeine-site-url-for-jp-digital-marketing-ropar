@@ -1,0 +1,23 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Switch default custom domain to jpdigitalmarketing.in in provisioning UI",
+  "requirements": [
+    {
+      "id": "REQ-11",
+      "summary": "Replace the default/recommended custom domain and all provisioning UI example references from jpdigitalmarketing.net to jpdigitalmarketing.in, including post-reset behavior.",
+      "acceptanceCriteria": [
+        "When the backend returns no configured custom domain, the custom domain input is pre-filled with \"jpdigitalmarketing.in\".",
+        "All user-facing example text in the provisioning/publishing UI that previously referenced \"jpdigitalmarketing.net\" now references \"jpdigitalmarketing.in\" (including alerts and descriptions).",
+        "After using the \"Delete/Reset site configuration\" action, the UI resets the custom domain input back to the default \"jpdigitalmarketing.in\" and reflects the unconfigured/offline state."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/SubdomainProvisioningPage.tsx",
+          "operation": "modify",
+          "description": "Update DEFAULT_CUSTOM_DOMAIN from \"jpdigitalmarketing.net\" to \"jpdigitalmarketing.in\" and ensure all user-facing example strings and placeholders that reference the default domain reflect \".in\"; confirm reset flow sets the input back to the new default and the prefill effect still applies when backend domain is null. The UI uses shadcn-ui components (Card, Input, Alert, etc.) for the provisioning page—verify the component's usage instructions before implementing."
+        }
+      ]
+    }
+  ]
+}

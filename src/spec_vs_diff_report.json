@@ -1,0 +1,39 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-12T10:49:23.058Z",
+  "summary": "REQ-11 is partially implemented: the default custom domain constant is updated to jpdigitalmarketing.in and the UI pre-fill logic appears to set this default when the backend returns no configured domain. However, based on the provided (truncated) diff summary, it is not clearly evidenced that all user-facing example text was updated from .net to .in, nor that the Delete/Reset site configuration action resets the custom-domain input back to the default.",
+  "missing_requirements": [
+    {
+      "id": "REQ-11",
+      "requirement": "All user-facing example text in the provisioning/publishing UI that previously referenced \"jpdigitalmarketing.net\" now references \"jpdigitalmarketing.in\" (including alerts and descriptions).",
+      "reason": "The diff excerpt only shows the default constant and pre-fill logic; it does not show any user-facing example/description/alert text updates from .net to .in. Because the file content is truncated, this cannot be confirmed from the provided evidence.",
+      "evidence": [
+        "frontend/src/pages/SubdomainProvisioningPage.tsx (truncated)"
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "requirement": "After using the \"Delete/Reset site configuration\" action, the UI resets the custom domain input back to the default \"jpdigitalmarketing.in\" and reflects the unconfigured/offline state.",
+      "reason": "The excerpt shows state reset for subdomain in `handleReset`, and shows a `useResetSiteStorage` hook is present, but it does not show that the reset/delete action explicitly resets `customDomain` back to DEFAULT_CUSTOM_DOMAIN (or clears configuredDomain and causes the default to be re-applied) and updates the UI to the unconfigured/offline state. Truncation prevents verification.",
+      "evidence": [
+        "frontend/src/pages/SubdomainProvisioningPage.tsx (truncated)"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Project state/metadata updated (projectStateVersion and summary in project_state.json).",
+      "reason": "The BuildRequest focuses on switching the default custom domain value in the provisioning UI; it does not request updating project metadata files.",
+      "evidence": [
+        "project_state.json (truncated)"
+      ]
+    }
+  ],
+  "confidence": 0.6,
+  "changed_files": [
+    "frontend-file-summaries.txt",
+    "frontend/src/pages/SubdomainProvisioningPage.tsx",
+    "project_state.json"
+  ]
+}

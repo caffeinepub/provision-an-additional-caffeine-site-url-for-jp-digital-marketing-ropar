@@ -1,2 +1,3 @@
-# provision-an-additional-caffeine-site-url-for-jp-digital-marketing-ropar
-Exported from Caffeine project: Provision an additional Caffeine site URL for JP Digital Marketing Ropar
+## 
+
+To run app build and run docker image: `docker build -t app . docker run -it --network host app`

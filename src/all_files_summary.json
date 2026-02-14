@@ -1,0 +1,19 @@
+{
+  "backend/main.mo": "Motoko canister storing publication state, subdomain, and custom domain with functions to publish, unpublish, configure domain, and reset storage.",
+  "feature_evidence.json": "Feature evidence report describing a domain change to jpdigitalmarketing.in and listing affected files and components.",
+  "frontend-file-summaries.txt": "Prewritten summaries of key frontend files including provisioning page, status panel, layout, validation, hooks, and styling.",
+  "frontend/index.css": "Global Tailwind-based styling defining OKLCH color tokens and light/dark mode variables.",
+  "frontend/index.html": "HTML entry point setting metadata, title, fonts, and mounting the React app.",
+  "frontend/src/App.tsx": "Root React component wiring QueryClientProvider, layout, provisioning page, and global Toaster.",
+  "frontend/src/components/layout/AppLayout.tsx": "Layout wrapper providing header, footer with attribution, and main content area.",
+  "frontend/src/components/ProvisioningStatusPanel.tsx": "UI panel showing provisioning state with icons, status text, and displayed primary or preview URLs.",
+  "frontend/src/hooks/useActor.ts": "Hook creating and caching an authenticated or anonymous backend actor and invalidating dependent queries on identity changes.",
+  "frontend/src/hooks/useInternetIdentity.ts": "Context and provider for Internet Identity authentication with login, logout, and identity loading logic.",
+  "frontend/src/hooks/useQueries.ts": "React Query hooks for backend interactions including publish, unpublish, domain/subdomain retrieval, and reset operations.",
+  "frontend/src/index.css": "Defines Tailwind layers and extensive OKLCH theme variables for light and dark modes, including sidebar and chart palettes.",
+  "frontend/src/lib/subdomainValidation.ts": "Provides subdomain validation logic enforcing DNS rules and reserved-name checks, plus a normalization helper.",
+  "frontend/src/main.tsx": "Bootstraps the React app, wrapping it with React Query and the InternetIdentityProvider.",
+  "frontend/src/pages/SubdomainProvisioningPage.tsx": "Implements the UI and logic for validating, setting, publishing, unpublishing, and configuring subdomains and custom domains.",
+  "frontend/tailwind.config.js": "Configures Tailwind with custom OKLCH color tokens, fonts, container settings, shadows, and plugin integrations.",
+  "project_state.json": "Tracks project metadata, requested features, known issues, and current state for the JP Digital Marketing website setup."
+}
