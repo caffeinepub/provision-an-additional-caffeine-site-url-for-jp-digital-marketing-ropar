@@ -1,38 +1,67 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-12T10:49:23.058Z",
-  "summary": "REQ-11 is partially implemented: the default custom domain constant is updated to jpdigitalmarketing.in and the UI pre-fill logic appears to set this default when the backend returns no configured domain. However, based on the provided (truncated) diff summary, it is not clearly evidenced that all user-facing example text was updated from .net to .in, nor that the Delete/Reset site configuration action resets the custom-domain input back to the default.",
-  "missing_requirements": [
+  "generatedAt": "2026-02-14T03:56:04.845Z",
+  "summary": "All three requested UI-focused requirements (permanent publish messaging + preview-vs-live URL clarity, default domain changed to jpdigitalmarketing.net, and an on-page DNS help section with the required A/CNAME records and propagation time) appear to be implemented. The diff also includes several additional UI/behavior changes not requested (reset/delete workflow, styling/theming changes, metadata updates, and extra validation rules).",
+  "missing_requirements": [],
+  "hallucinated_features": [
     {
-      "id": "REQ-11",
-      "requirement": "All user-facing example text in the provisioning/publishing UI that previously referenced \"jpdigitalmarketing.net\" now references \"jpdigitalmarketing.in\" (including alerts and descriptions).",
-      "reason": "The diff excerpt only shows the default constant and pre-fill logic; it does not show any user-facing example/description/alert text updates from .net to .in. Because the file content is truncated, this cannot be confirmed from the provided evidence.",
+      "description": "Added copy-to-clipboard UX and toast notifications for DNS record fields",
+      "reason": "REQ-3 only requires displaying DNS records and propagation time; it does not request clipboard tooling or toasts.",
       "evidence": [
-        "frontend/src/pages/SubdomainProvisioningPage.tsx (truncated)"
+        "frontend/src/components/ConnectDomainHelpSection.tsx"
       ]
     },
     {
-      "id": "REQ-11",
-      "requirement": "After using the \"Delete/Reset site configuration\" action, the UI resets the custom domain input back to the default \"jpdigitalmarketing.in\" and reflects the unconfigured/offline state.",
-      "reason": "The excerpt shows state reset for subdomain in `handleReset`, and shows a `useResetSiteStorage` hook is present, but it does not show that the reset/delete action explicitly resets `customDomain` back to DEFAULT_CUSTOM_DOMAIN (or clears configuredDomain and causes the default to be re-applied) and updates the UI to the unconfigured/offline state. Truncation prevents verification.",
+      "description": "Added a reset/delete site storage workflow and a new resetSiteStorage React Query mutation",
+      "reason": "Not requested by REQ-1/2/3 and not listed as a goal; introduces additional functionality beyond UI copy/domain help.",
       "evidence": [
-        "frontend/src/pages/SubdomainProvisioningPage.tsx (truncated)"
+        "frontend/src/pages/SubdomainProvisioningPage.tsx",
+        "frontend-file-summaries.txt (frontend/src/hooks/useQueries.ts description)"
       ]
-    }
-  ],
-  "hallucinated_features": [
+    },
     {
-      "description": "Project state/metadata updated (projectStateVersion and summary in project_state.json).",
-      "reason": "The BuildRequest focuses on switching the default custom domain value in the provisioning UI; it does not request updating project metadata files.",
+      "description": "Introduced additional subdomain validation rule rejecting reserved subdomain \"jpdigitalmarketingropar\"",
+      "reason": "No requirement mentions adding new reserved subdomain/business rule validation.",
       "evidence": [
-        "project_state.json (truncated)"
+        "frontend-file-summaries.txt (frontend/src/lib/subdomainValidation.ts description)"
+      ]
+    },
+    {
+      "description": "Large-scale global styling/theming changes (OKLCH palette, Tailwind theme extensions, typography updates)",
+      "reason": "Not requested; requirements are limited to publishing UI copy, default domain text, and DNS help instructions.",
+      "evidence": [
+        "frontend-file-summaries.txt (frontend/src/index.css description)",
+        "frontend-file-summaries.txt (frontend/tailwind.config.js description)"
+      ]
+    },
+    {
+      "description": "Updated HTML title/meta description and added Inter font preload",
+      "reason": "Not requested by the BuildRequest requirements.",
+      "evidence": [
+        "frontend-file-summaries.txt (frontend/index.html description)"
+      ]
+    },
+    {
+      "description": "Modified shared layout footer with attribution link including UTM parameters",
+      "reason": "Not requested; outside REQ-1/2/3 scope.",
+      "evidence": [
+        "frontend-file-summaries.txt (frontend/src/components/layout/AppLayout.tsx description)"
+      ]
+    },
+    {
+      "description": "DNS help text references additional registrars/providers beyond iFreeDomains (e.g., GoDaddy, Namecheap)",
+      "reason": "REQ-3 specifies iFreeDomains-focused instructions; mentioning other providers is extra content not requested.",
+      "evidence": [
+        "frontend/src/components/ConnectDomainHelpSection.tsx"
       ]
     }
   ],
-  "confidence": 0.6,
+  "confidence": 0.78,
   "changed_files": [
     "frontend-file-summaries.txt",
+    "frontend/src/components/ConnectDomainHelpSection.tsx",
+    "frontend/src/components/ProvisioningStatusPanel.tsx",
     "frontend/src/pages/SubdomainProvisioningPage.tsx",
     "project_state.json"
   ]

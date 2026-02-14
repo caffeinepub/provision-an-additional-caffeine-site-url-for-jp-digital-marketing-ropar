@@ -1,122 +1,57 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 13,
-  "summary": "Website project for JP Digital Marketing Ropar: take the current draft offline (delete/unpublish from the internet) and change the site URL to use the custom domain jpdigitalmarketing.in instead of a Caffeine draft/subdomain.",
+  "projectStateVersion": 3,
+  "summary": "Project to publish a Caffeine-hosted website permanently to the internet and connect the custom domain jpdigitalmarketing.net via iFreeDomains DNS.",
   "architectural_notes": [
-    "User confirmed they want the currently deployed draft pushed live (production publish approved).",
-    "User requests taking the currently deployed draft offline (unpublish/delete).",
-    "User requests trying a different custom domain: jpdigitalmarketing.in (instead of jpdigitalmarketing.net)."
+    "Custom domain connection requires DNS records at registrar: A record @ -> 34.160.111.145 and CNAME www -> cname.caffeine.xyz (for jpdigitalmarketing.net via iFreeDomains).",
+    "Caffeine draft apps can expire; live/published versions are intended to be permanent."
   ],
   "known_issues": [
-    "Production deploy failed with a deployment error when attempting to take Draft Version 5 live."
+    "Domain jpdigitalmarketing.net not resolving because DNS not configured/pointing to the Caffeine site yet.",
+    "Draft app expiration caused the need to rebuild/redeploy."
   ],
   "isFixRequest": false,
   "existing_features": [
     {
-      "id": "feature-clarify-and-provision-a-second-unique-caffeine-subdomain-for-the-new-site-do-not-reuse-the-exact-subdomain-jpdigitalmarketingropar-caffeine-xyz-because-two-different-sites-cannot-share-the-same-url",
-      "title": "Clarify and provision a second, unique Caffeine subdomain for the new site; do not reuse the exact subdomain `jpdigitalmarketingropar.caffeine.xyz` because two different sites cannot share the same URL.",
+      "id": "feature-update-the-publishing-ui-copy-to-clearly-explain-that-the-provided-draft-url-https-fluffy-magenta-esu-draft-caffeine-xyz-is-a-preview-link-and-that-using-the-app-s-publish-permanently-publish-to-production-action-makes-the-site-live-permanently-does-not-expire",
+      "title": "Update the publishing UI copy to clearly explain that the provided draft URL (https://fluffy-magenta-esu-draft.caffeine.xyz/) is a preview link and that using the app’s “Publish Permanently / Publish to Production” action makes the site live permanently (does not expire).",
       "reqIds": [
         "REQ-1"
       ],
       "version": 1
     },
     {
-      "id": "feature-apply-a-creative-coherent-visual-theme-colors-typography-spacing-and-component-styling-across-the-frontend-so-the-site-looks-consistent-and-professional-use-english-for-all-user-facing-text",
-      "title": "Apply a creative, coherent visual theme (colors, typography, spacing, and component styling) across the frontend so the site looks consistent and professional. Use English for all user-facing text.",
+      "id": "feature-change-the-default-recommended-custom-domain-throughout-the-ui-from-jpdigitalmarketing-in-to-jpdigitalmarketing-net-including-default-input-prefill-and-any-example-placeholder-text-while-still-allowing-the-user-to-edit-it",
+      "title": "Change the default recommended custom domain throughout the UI from \"jpdigitalmarketing.in\" to \"jpdigitalmarketing.net\" (including default input prefill and any example/placeholder text), while still allowing the user to edit it.",
       "reqIds": [
         "REQ-2"
       ],
       "version": 1
     },
     {
-      "id": "feature-implement-a-permanent-production-publish-workflow-so-a-user-can-publish-the-deployed-site-live-and-see-a-clear-published-status-afterward",
-      "title": "Implement a permanent (production) publish workflow so a user can publish the deployed site live and see a clear “Published” status afterward.",
+      "id": "feature-add-a-connect-your-domain-help-section-in-the-provisioning-publishing-page-that-provides-the-exact-dns-records-and-values-needed-for-ifreedomains-to-point-jpdigitalmarketing-net-to-the-live-site-including-expected-propagation-time",
+      "title": "Add a \"Connect your domain\" help section in the provisioning/publishing page that provides the exact DNS records and values needed for iFreeDomains to point jpdigitalmarketing.net to the live site, including expected propagation time.",
       "reqIds": [
         "REQ-3"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-when-the-user-publishes-the-site-to-production-persist-the-chosen-subdomain-in-the-backend-and-expose-it-via-an-api-so-the-frontend-can-reliably-display-the-live-domain-including-after-a-page-refresh-instead-of-depending-on-in-memory-ui-state",
-      "title": "When the user publishes the site to production, persist the chosen subdomain in the backend and expose it via an API so the frontend can reliably display the live domain (including after a page refresh), instead of depending on in-memory UI state.",
-      "reqIds": [
-        "REQ-4"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-add-an-unpublish-takedown-capability-so-the-currently-deployed-site-can-be-taken-offline-i-e-no-longer-marked-as-published-and-the-ui-clearly-reflects-that-it-has-been-unpublished",
-      "title": "Add an unpublish/takedown capability so the currently deployed site can be taken offline (i.e., no longer marked as published) and the UI clearly reflects that it has been unpublished.",
-      "reqIds": [
-        "REQ-5"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-support-configuring-and-displaying-the-custom-domain-jpdigitalmarketing-net-as-the-primary-site-url-instead-of-the-caffeine-draft-subdomain-url-including-persisting-the-custom-domain-in-the-backend-so-it-survives-refreshes",
-      "title": "Support configuring and displaying the custom domain \"jpdigitalmarketing.net\" as the primary site URL instead of the Caffeine draft/subdomain URL, including persisting the custom domain in the backend so it survives refreshes.",
-      "reqIds": [
-        "REQ-6"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-update-the-existing-provisioning-publishing-ui-so-it-can-present-both-the-caffeine-subdomain-for-provisioning-and-the-custom-domain-for-the-final-url-and-ensure-the-status-panels-and-toasts-reflect-the-correct-url-after-changes",
-      "title": "Update the existing provisioning/publishing UI so it can present both the Caffeine subdomain (for provisioning) and the custom domain (for the final URL), and ensure the status panels and toasts reflect the correct URL after changes.",
-      "reqIds": [
-        "REQ-7"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-update-the-frontend-provisioning-publishing-ui-to-provide-a-clear-delete-reset-site-configuration-action-that-calls-the-backend-reset-api-and-explicitly-communicates-in-english-that-the-caffeine-xyz-draft-url-is-a-preview-url-and-the-intended-primary-url-can-be-set-to-the-custom-domain-jpdigitalmarketing-net-after-reset-the-ui-must-clear-inputs-and-reflect-the-offline-unconfigured-state",
-      "title": "Update the frontend provisioning/publishing UI to provide a clear “Delete/Reset site configuration” action that calls the backend reset API and explicitly communicates (in English) that the caffeine.xyz *draft* URL is a preview URL and the intended primary URL can be set to the custom domain jpdigitalmarketing.net. After reset, the UI must clear inputs and reflect the offline/unconfigured state.",
-      "reqIds": [
-        "REQ-9"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-make-it-easy-to-set-the-primary-url-to-the-custom-domain-jpdigitalmarketing-net-by-pre-filling-the-custom-domain-input-with-jpdigitalmarketing-net-when-no-custom-domain-is-configured-yet-while-still-allowing-the-user-to-edit-it-and-ensure-all-url-status-messaging-prefers-the-configured-custom-domain-over-any-caffeine-xyz-url",
-      "title": "Make it easy to set the primary URL to the custom domain jpdigitalmarketing.net by pre-filling the custom domain input with \"jpdigitalmarketing.net\" when no custom domain is configured yet (while still allowing the user to edit it), and ensure all URL/status messaging prefers the configured custom domain over any caffeine.xyz URL.",
-      "reqIds": [
-        "REQ-10"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-update-the-application-s-custom-domain-target-from-jpdigitalmarketing-net-to-jpdigitalmarketing-in-so-that-when-no-custom-domain-is-configured-yet-the-ui-pre-fills-and-recommends-jpdigitalmarketing-in-and-all-user-facing-example-text-references-jpdigitalmarketing-in-not-net",
-      "title": "Update the application’s custom domain target from \"jpdigitalmarketing.net\" to \"jpdigitalmarketing.in\" so that when no custom domain is configured yet, the UI pre-fills and recommends \"jpdigitalmarketing.in\" and all user-facing example text references \"jpdigitalmarketing.in\" (not .net).",
-      "reqIds": [
-        "REQ-11"
       ],
       "version": 1
     }
   ],
   "new_feature_requests": [
     {
-      "id": "AR-3",
-      "summary": "Remove/unpublish the currently deployed draft site from the internet (takedown/delete)",
+      "id": "AR-1",
+      "summary": "Publish the Caffeine draft site (fluffy-magenta-esu-draft.caffeine.xyz) as a permanent live website",
       "reqIds": [],
       "status": "pending"
     },
     {
-      "id": "AR-5",
-      "summary": "Add a backend API to fully delete/reset the current site configuration so the user can effectively “delete the caffeine subdomain website” (take it offline and clear any stored subdomain/custom-domain). The reset must set published=false and clear the stored subdomain and custom domain so subsequent reads return null.",
-      "reqIds": [
-        "REQ-8"
-      ],
-      "status": "pending"
-    },
-    {
-      "id": "AR-6",
-      "summary": "Update custom domain target from jpdigitalmarketing.net to jpdigitalmarketing.in for the website URL (custom domain setup)",
+      "id": "AR-2",
+      "summary": "Connect custom domain jpdigitalmarketing.net to the live site by configuring DNS at iFreeDomains",
       "reqIds": [],
       "status": "pending"
     }
   ],
-  "gameProjectType": "none",
-  "projectName": "Provision an additional Caffeine site URL for JP Digital Marketing Ropar",
+  "projectName": "Make website publish permanent and guide custom domain connection for jpdigitalmarketing.net",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }

@@ -1,11 +1,12 @@
 # Specification
 
 ## Summary
-**Goal:** Switch the provisioning/publishing UI’s default and example custom domain from `jpdigitalmarketing.net` to `jpdigitalmarketing.in`.
+**Goal:** Clarify the difference between preview vs permanent live publishing, update the default recommended custom domain to jpdigitalmarketing.net, and provide clear DNS instructions to connect the domain.
 
 **Planned changes:**
-- Update the frontend default custom domain value to `jpdigitalmarketing.in` when no custom domain is configured by the backend.
-- Replace all user-facing example text in the provisioning/publishing UI that references `jpdigitalmarketing.net` to instead reference `jpdigitalmarketing.in` (including alerts and descriptions).
-- Ensure the “Delete/Reset site configuration” action resets the custom domain input back to the default `jpdigitalmarketing.in` and reflects the unconfigured/offline state.
+- Update publishing UI copy to explain that the draft URL is a preview link (may expire) and that “Publish Permanently / Publish to Production” makes the site live permanently.
+- Ensure the UI clearly labels and displays the preview/draft URL versus the live/primary production URL after publishing.
+- Change the default recommended custom domain in inputs/placeholders/examples from “jpdigitalmarketing.in” to “jpdigitalmarketing.net”, while still allowing user edits and showing an already-configured backend domain when present.
+- Add a “Connect your domain” help section on the provisioning/publishing page with manual iFreeDomains DNS instructions (A and CNAME records) and an expected propagation time window.
 
-**User-visible outcome:** When no custom domain is configured (including after a reset), the UI pre-fills `jpdigitalmarketing.in` and all example/help text shows `.in` instead of `.net`.
+**User-visible outcome:** Users can understand and perform a permanent production publish, see which link is the preview vs live URL, and follow on-page DNS steps to point jpdigitalmarketing.net to the live site.

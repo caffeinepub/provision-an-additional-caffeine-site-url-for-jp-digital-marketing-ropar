@@ -1,21 +1,63 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Switch default custom domain to jpdigitalmarketing.in in provisioning UI",
+  "title": "Clarify permanent publishing, default custom domain, and domain-connection DNS help for jpdigitalmarketing.net",
   "requirements": [
     {
-      "id": "REQ-11",
-      "summary": "Replace the default/recommended custom domain and all provisioning UI example references from jpdigitalmarketing.net to jpdigitalmarketing.in, including post-reset behavior.",
+      "id": "REQ-1",
+      "summary": "Clarify in the publishing UI that draft URLs are preview links that may expire, while production publishing is permanent, and clearly distinguish preview vs live URLs after publishing.",
       "acceptanceCriteria": [
-        "When the backend returns no configured custom domain, the custom domain input is pre-filled with \"jpdigitalmarketing.in\".",
-        "All user-facing example text in the provisioning/publishing UI that previously referenced \"jpdigitalmarketing.net\" now references \"jpdigitalmarketing.in\" (including alerts and descriptions).",
-        "After using the \"Delete/Reset site configuration\" action, the UI resets the custom domain input back to the default \"jpdigitalmarketing.in\" and reflects the unconfigured/offline state."
+        "The publishing confirmation dialog and/or status panel explicitly states that production/live publish is permanent and draft links may expire.",
+        "All user-facing text is in English.",
+        "The UI shows the user which URL is considered the preview/draft URL vs the live/primary URL after publishing."
       ],
       "file_operations": [
         {
           "path": "frontend/src/pages/SubdomainProvisioningPage.tsx",
           "operation": "modify",
-          "description": "Update DEFAULT_CUSTOM_DOMAIN from \"jpdigitalmarketing.net\" to \"jpdigitalmarketing.in\" and ensure all user-facing example strings and placeholders that reference the default domain reflect \".in\"; confirm reset flow sets the input back to the new default and the prefill effect still applies when backend domain is null. The UI uses shadcn-ui components (Card, Input, Alert, etc.) for the provisioning page—verify the component's usage instructions before implementing."
+          "description": "Update user-facing publishing copy to explicitly distinguish (1) draft/preview links (including the -draft.caffeine.xyz pattern) that may expire versus (2) the permanent live URL produced by “Publish Permanently / Publish to Production”. Ensure the publish confirmation dialog copy clearly states permanence and that draft links may expire. Also ensure the page labels and messaging clearly indicate which URL is preview vs live after publishing. Use existing shadcn-ui building blocks already imported (Alert, AlertDialog, Card, etc.) to present the copy consistently. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/ProvisioningStatusPanel.tsx",
+          "operation": "modify",
+          "description": "Adjust the status panel wording/labels so that when published it explicitly shows a Live/Primary URL (permanent) and separately explains what counts as a Preview/Draft URL (may expire), using clear English labels. Keep the display consistent whether the primary URL is a custom domain or the caffeine.xyz URL. Use existing shadcn-ui Card/Badge styling already present. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Change the default recommended custom domain in the UI from jpdigitalmarketing.in to jpdigitalmarketing.net while preserving backend-configured values and allowing edits.",
+      "acceptanceCriteria": [
+        "When no custom domain is configured in the backend, the custom domain input is pre-filled with \"jpdigitalmarketing.net\".",
+        "All example text and placeholders that reference a default custom domain use \"jpdigitalmarketing.net\".",
+        "If a custom domain is already configured in the backend, the UI loads and displays that value instead of the default."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/SubdomainProvisioningPage.tsx",
+          "operation": "modify",
+          "description": "Replace the UI default custom domain constant and all related placeholder/example text from “jpdigitalmarketing.in” to “jpdigitalmarketing.net”, including the input placeholder, descriptions, and any reset-to-default logic. Preserve the existing behavior: if a domain is configured from the backend it must override the default; otherwise prefill with the default while still allowing user edits. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Add a “Connect your domain” help section with exact iFreeDomains DNS records and expected propagation time on the provisioning/publishing page.",
+      "acceptanceCriteria": [
+        "The UI displays the two DNS records to add: A record host \"@\" to \"34.160.111.145\" and CNAME host \"www\" to \"cname.caffeine.xyz\".",
+        "The UI mentions an expected propagation time window (e.g., 5–30 minutes).",
+        "The DNS instructions are visible without requiring backend changes and are written in English."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/ConnectDomainHelpSection.tsx",
+          "operation": "create",
+          "description": "Create a reusable “Connect your domain” help section component that renders English, static DNS instructions for iFreeDomains, including the two required records (A @ → 34.160.111.145 and CNAME www → cname.caffeine.xyz) and a propagation-time note (e.g., 5–30 minutes). Implement using existing shadcn-ui primitives (e.g., Card, Separator, Badge, Alert) for consistent styling. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/SubdomainProvisioningPage.tsx",
+          "operation": "modify",
+          "description": "Wire the new ConnectDomainHelpSection into the provisioning/publishing page (near the custom domain configuration area) so the DNS records are always visible without backend changes. Ensure the content is in English and includes the exact required record values and propagation guidance. Verify the component's usage instructions before implementing."
         }
       ]
     }

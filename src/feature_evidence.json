@@ -2,8 +2,27 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-update-the-application-s-custom-domain-target-from-jpdigitalmarketing-net-to-jpdigitalmarketing-in-so-that-when-no-custom-domain-is-configured-yet-the-ui-pre-fills-and-recommends-jpdigitalmarketing-in-and-all-user-facing-example-text-references-jpdigitalmarketing-in-not-net",
-      "featureTitle": "Update the application’s custom domain target from \"jpdigitalmarketing.net\" to \"jpdigitalmarketing.in\" so that when no custom domain is configured yet, the UI pre-fills and recommends \"jpdigitalmarketing.in\" and all user-facing example text references \"jpdigitalmarketing.in\" (not .net).",
+      "featureId": "feature-update-the-publishing-ui-copy-to-clearly-explain-that-the-provided-draft-url-https-fluffy-magenta-esu-draft-caffeine-xyz-is-a-preview-link-and-that-using-the-app-s-publish-permanently-publish-to-production-action-makes-the-site-live-permanently-does-not-expire",
+      "featureTitle": "Update the publishing UI copy to clearly explain that the provided draft URL (https://fluffy-magenta-esu-draft.caffeine.xyz/) is a preview link and that using the app’s “Publish Permanently / Publish to Production” action makes the site live permanently (does not expire).",
+      "files": [
+        "frontend/src/components/ProvisioningStatusPanel.tsx",
+        "frontend/src/pages/SubdomainProvisioningPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-change-the-default-recommended-custom-domain-throughout-the-ui-from-jpdigitalmarketing-in-to-jpdigitalmarketing-net-including-default-input-prefill-and-any-example-placeholder-text-while-still-allowing-the-user-to-edit-it",
+      "featureTitle": "Change the default recommended custom domain throughout the UI from \"jpdigitalmarketing.in\" to \"jpdigitalmarketing.net\" (including default input prefill and any example/placeholder text), while still allowing the user to edit it.",
       "files": [
         "frontend/src/pages/SubdomainProvisioningPage.tsx"
       ],
@@ -15,7 +34,26 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-11"
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-connect-your-domain-help-section-in-the-provisioning-publishing-page-that-provides-the-exact-dns-records-and-values-needed-for-ifreedomains-to-point-jpdigitalmarketing-net-to-the-live-site-including-expected-propagation-time",
+      "featureTitle": "Add a \"Connect your domain\" help section in the provisioning/publishing page that provides the exact DNS records and values needed for iFreeDomains to point jpdigitalmarketing.net to the live site, including expected propagation time.",
+      "files": [
+        "frontend/src/components/ConnectDomainHelpSection.tsx",
+        "frontend/src/pages/SubdomainProvisioningPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
       ],
       "confidence": "high"
     }

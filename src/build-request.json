@@ -1,36 +1,71 @@
 {
   "kind": "build_request",
-  "title": "Switch default custom domain to jpdigitalmarketing.in across provisioning UI",
+  "title": "Make website publish permanent and guide custom domain connection for jpdigitalmarketing.net",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-11",
-      "text": "Update the application’s custom domain target from \"jpdigitalmarketing.net\" to \"jpdigitalmarketing.in\" so that when no custom domain is configured yet, the UI pre-fills and recommends \"jpdigitalmarketing.in\" and all user-facing example text references \"jpdigitalmarketing.in\" (not .net).",
+      "id": "REQ-1",
+      "text": "Update the publishing UI copy to clearly explain that the provided draft URL (https://fluffy-magenta-esu-draft.caffeine.xyz/) is a preview link and that using the app’s “Publish Permanently / Publish to Production” action makes the site live permanently (does not expire).",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-6"
+          "msg-1"
         ],
         "quotes": [
-          "'jpdigitalmarketing.in' try this one"
+          "plz publish my website https://fluffy-magenta-esu-draft.caffeine.xyz/           permanently to internet"
         ]
       },
       "acceptanceCriteria": [
-        "When the backend returns no configured custom domain, the custom domain input is pre-filled with \"jpdigitalmarketing.in\".",
-        "All user-facing example text in the provisioning/publishing UI that previously referenced \"jpdigitalmarketing.net\" now references \"jpdigitalmarketing.in\" (including alerts and descriptions).",
-        "After using the \"Delete/Reset site configuration\" action, the UI resets the custom domain input back to the default \"jpdigitalmarketing.in\" and reflects the unconfigured/offline state."
+        "The publishing confirmation dialog and/or status panel explicitly states that production/live publish is permanent and draft links may expire.",
+        "All user-facing text is in English.",
+        "The UI shows the user which URL is considered the preview/draft URL vs the live/primary URL after publishing."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Change the default recommended custom domain throughout the UI from \"jpdigitalmarketing.in\" to \"jpdigitalmarketing.net\" (including default input prefill and any example/placeholder text), while still allowing the user to edit it.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "plz publish my website https://fluffy-magenta-esu-draft.caffeine.xyz/           permanently to internet"
+        ]
+      },
+      "acceptanceCriteria": [
+        "When no custom domain is configured in the backend, the custom domain input is pre-filled with \"jpdigitalmarketing.net\".",
+        "All example text and placeholders that reference a default custom domain use \"jpdigitalmarketing.net\".",
+        "If a custom domain is already configured in the backend, the UI loads and displays that value instead of the default."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Add a \"Connect your domain\" help section in the provisioning/publishing page that provides the exact DNS records and values needed for iFreeDomains to point jpdigitalmarketing.net to the live site, including expected propagation time.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "plz publish my website https://fluffy-magenta-esu-draft.caffeine.xyz/           permanently to internet"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The UI displays the two DNS records to add: A record host \"@\" to \"34.160.111.145\" and CNAME host \"www\" to \"cname.caffeine.xyz\".",
+        "The UI mentions an expected propagation time window (e.g., 5–30 minutes).",
+        "The DNS instructions are visible without requiring backend changes and are written in English."
       ]
     }
   ],
   "constraints": [
-    "Use English for all user-facing text.",
-    "Do not edit frontend immutable paths: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui.",
-    "Backend must remain a single Motoko actor in backend/main.mo; add migration logic only if state changes require it."
+    "Do not edit files under frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, or frontend/src/components/ui; compose them instead.",
+    "Backend must remain a single Motoko actor in backend/main.mo; only add migration.mo if a state upgrade is required."
   ],
   "nonGoals": [
-    "Investigate or fix the external production deployment error itself (beyond updating the domain value shown/used by the app).",
-    "Add new authentication providers (only Internet Identity is supported).",
-    "Introduce external databases or additional backend services."
+    "Implementing automated DNS changes at iFreeDomains (manual instructions only).",
+    "Adding third-party authentication providers beyond Internet Identity.",
+    "Creating a new backend database or integrating external hosting providers."
   ],
   "imageRequirements": {
     "required": [],

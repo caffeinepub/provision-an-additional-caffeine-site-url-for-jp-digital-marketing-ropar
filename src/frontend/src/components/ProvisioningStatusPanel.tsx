@@ -23,9 +23,9 @@ export function ProvisioningStatusPanel({
     if (isPublished) {
       return {
         icon: Rocket,
-        label: 'Published Live',
+        label: 'Published Live (Permanent)',
         variant: 'default' as const,
-        description: 'Your site is live in production',
+        description: 'Your site is live permanently in production',
         color: 'text-green-600 dark:text-green-400'
       };
     }
@@ -95,16 +95,14 @@ export function ProvisioningStatusPanel({
           <div className="pt-4 border-t space-y-2">
             <h4 className="text-sm font-semibold flex items-center gap-2">
               <Globe className="w-4 h-4" />
-              Primary URL
+              Live URL (Permanent)
             </h4>
             <div className="bg-muted rounded-md p-3">
               <p className="text-sm font-mono break-all">{primaryUrl}</p>
             </div>
-            {customDomain && (
-              <p className="text-xs text-muted-foreground">
-                This is your main public URL
-              </p>
-            )}
+            <p className="text-xs text-green-700 dark:text-green-400 font-medium">
+              ✓ This is your permanent public URL
+            </p>
           </div>
         )}
 
@@ -115,7 +113,7 @@ export function ProvisioningStatusPanel({
               <p className="text-sm font-mono break-all">{subdomain}.caffeine.xyz</p>
             </div>
             <p className="text-xs text-muted-foreground">
-              Preview/draft URL for provisioning
+              Preview/draft URL (may expire when unused)
             </p>
           </div>
         )}
@@ -127,7 +125,7 @@ export function ProvisioningStatusPanel({
               <p className="text-xs font-mono break-all text-muted-foreground">{caffeineUrl}</p>
             </div>
             <p className="text-xs text-muted-foreground">
-              Internal provisioning detail
+              Internal provisioning detail (may expire)
             </p>
           </div>
         )}
@@ -138,7 +136,7 @@ export function ProvisioningStatusPanel({
             <li className={subdomain ? 'line-through opacity-50' : ''}>Enter subdomain name</li>
             <li className={isValidated ? 'line-through opacity-50' : ''}>Validate availability</li>
             <li className={isPublished ? 'line-through opacity-50' : isValidated ? 'font-semibold text-foreground' : ''}>
-              Publish to production
+              Publish permanently to production
             </li>
           </ol>
         </div>
@@ -147,7 +145,7 @@ export function ProvisioningStatusPanel({
           <div className="pt-4 border-t">
             <div className="bg-green-50 dark:bg-green-950/20 border border-green-500/50 rounded-md p-3">
               <p className="text-xs text-green-800 dark:text-green-200 font-medium">
-                Your site is now live and accessible to everyone!
+                ✓ Your site is live permanently and will never expire!
               </p>
             </div>
           </div>

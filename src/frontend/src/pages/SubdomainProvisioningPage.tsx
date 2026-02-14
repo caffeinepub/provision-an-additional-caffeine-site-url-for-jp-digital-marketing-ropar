@@ -19,11 +19,12 @@ import {
 } from '@/components/ui/alert-dialog';
 import { validateSubdomain, RESERVED_SUBDOMAIN } from '@/lib/subdomainValidation';
 import { ProvisioningStatusPanel } from '@/components/ProvisioningStatusPanel';
+import { ConnectDomainHelpSection } from '@/components/ConnectDomainHelpSection';
 import { CheckCircle2, AlertCircle, Globe, Loader2, Power, Settings, Trash2, Info } from 'lucide-react';
 import { useIsPublished, usePublish, useGetSubdomain, useUnpublish, useGetDomain, useConfigureDomain, useResetSiteStorage } from '@/hooks/useQueries';
 import { toast } from 'sonner';
 
-const DEFAULT_CUSTOM_DOMAIN = 'jpdigitalmarketing.in';
+const DEFAULT_CUSTOM_DOMAIN = 'jpdigitalmarketing.net';
 
 export function SubdomainProvisioningPage() {
   const [subdomain, setSubdomain] = useState('');
@@ -104,8 +105,8 @@ export function SubdomainProvisioningPage() {
     try {
       await publishMutation.mutateAsync(confirmedSubdomain);
       const primaryUrl = configuredDomain || customDomain.trim() || `${confirmedSubdomain}.caffeine.xyz`;
-      toast.success('Site Published Successfully', {
-        description: `Your site is now live at ${primaryUrl}`,
+      toast.success('Site Published Permanently', {
+        description: `Your site is now live permanently at ${primaryUrl}`,
       });
     } catch (error) {
       toast.error('Publication Failed', {
@@ -204,8 +205,9 @@ export function SubdomainProvisioningPage() {
               <Alert className="border-blue-500/50 bg-blue-50 dark:bg-blue-950/20">
                 <Info className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                 <AlertDescription className="text-blue-800 dark:text-blue-200 text-sm">
-                  The <span className="font-semibold">.caffeine.xyz</span> URL is a preview/draft link for provisioning. 
-                  Your primary public URL should be your custom domain (e.g., <span className="font-semibold">{DEFAULT_CUSTOM_DOMAIN}</span>).
+                  The <span className="font-semibold">.caffeine.xyz</span> URL is a preview/draft link that may expire when unused. 
+                  Your primary public URL should be your custom domain (e.g., <span className="font-semibold">{DEFAULT_CUSTOM_DOMAIN}</span>). 
+                  Production publishing is <span className="font-semibold">permanent</span> and never expires.
                 </AlertDescription>
               </Alert>
 
@@ -258,7 +260,7 @@ export function SubdomainProvisioningPage() {
                 <Alert className="border-green-500/50 bg-green-50 dark:bg-green-950/20">
                   <CheckCircle2 className="h-4 w-4 text-green-600 dark:text-green-400" />
                   <AlertDescription className="text-green-800 dark:text-green-200">
-                    Your site is now published live at{' '}
+                    Your site is now published permanently at{' '}
                     <span className="font-semibold">{primaryUrl}</span>
                   </AlertDescription>
                 </Alert>
@@ -278,7 +280,7 @@ export function SubdomainProvisioningPage() {
                   <>
                     <Button size="lg" className="flex-1" disabled>
                       <CheckCircle2 className="w-4 h-4 mr-2" />
-                      Published Live
+                      Published Live (Permanent)
                     </Button>
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
@@ -346,21 +348,24 @@ export function SubdomainProvisioningPage() {
                       </AlertDialogTrigger>
                       <AlertDialogContent>
                         <AlertDialogHeader>
-                          <AlertDialogTitle>Publish Site to Production?</AlertDialogTitle>
-                          <AlertDialogDescription className="space-y-2">
+                          <AlertDialogTitle>Publish Site Permanently to Production?</AlertDialogTitle>
+                          <AlertDialogDescription className="space-y-3">
                             <p>
-                              You are about to publish your site permanently to production at{' '}
+                              You are about to publish your site <span className="font-semibold text-foreground">permanently</span> to production at{' '}
                               <span className="font-semibold text-foreground">{confirmedSubdomain}.caffeine.xyz</span>.
                             </p>
-                            <p className="text-muted-foreground">
-                              Your site will be live and accessible to everyone.
+                            <p className="text-foreground font-medium">
+                              Your live site will remain online permanently and will never expire.
+                            </p>
+                            <p className="text-xs text-muted-foreground">
+                              Note: Draft/preview links may expire when unused, but your production site stays live forever.
                             </p>
                           </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
                           <AlertDialogCancel>Cancel</AlertDialogCancel>
                           <AlertDialogAction onClick={handlePublish}>
-                            Publish to Production
+                            Publish Permanently
                           </AlertDialogAction>
                         </AlertDialogFooter>
                       </AlertDialogContent>
@@ -435,7 +440,7 @@ export function SubdomainProvisioningPage() {
                 ) : (
                   <>
                     <Settings className="w-4 h-4 mr-2" />
-                    Configure Custom Domain
+                    Set as Primary Domain
                   </>
                 )}
               </Button>
@@ -443,13 +448,15 @@ export function SubdomainProvisioningPage() {
               {configuredDomain && (
                 <Alert className="border-green-500/50 bg-green-50 dark:bg-green-950/20">
                   <CheckCircle2 className="h-4 w-4 text-green-600 dark:text-green-400" />
-                  <AlertDescription className="text-green-800 dark:text-green-200">
-                    Custom domain configured: <span className="font-semibold">{configuredDomain}</span>
+                  <AlertDescription className="text-green-800 dark:text-green-200 text-sm">
+                    Custom domain <span className="font-semibold">{configuredDomain}</span> is configured as your primary URL.
                   </AlertDescription>
                 </Alert>
               )}
             </CardContent>
           </Card>
+
+          <ConnectDomainHelpSection />
 
           <Card className="shadow-lg border-destructive/50">
             <CardHeader>
@@ -458,7 +465,7 @@ export function SubdomainProvisioningPage() {
                 Danger Zone
               </CardTitle>
               <CardDescription>
-                Permanently delete all site configuration and reset to defaults
+                Permanently delete all site configuration and start over
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -478,14 +485,14 @@ export function SubdomainProvisioningPage() {
                     ) : (
                       <>
                         <Trash2 className="w-4 h-4 mr-2" />
-                        Delete & Reset Site Configuration
+                        Delete & Reset Everything
                       </>
                     )}
                   </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
-                    <AlertDialogTitle>Delete All Site Configuration?</AlertDialogTitle>
+                    <AlertDialogTitle>Delete All Configuration?</AlertDialogTitle>
                     <AlertDialogDescription className="space-y-2">
                       <p className="font-semibold text-destructive">
                         This action cannot be undone!
@@ -494,12 +501,12 @@ export function SubdomainProvisioningPage() {
                         This will permanently delete:
                       </p>
                       <ul className="list-disc list-inside space-y-1 text-sm">
-                        <li>Your published subdomain configuration</li>
-                        <li>Your custom domain settings</li>
-                        <li>All provisioning state</li>
+                        <li>Your published site status</li>
+                        <li>Configured subdomain</li>
+                        <li>Custom domain settings</li>
                       </ul>
                       <p>
-                        Your site will be taken offline and all settings will be reset to defaults.
+                        You will need to reconfigure everything from scratch.
                       </p>
                     </AlertDialogDescription>
                   </AlertDialogHeader>
@@ -509,7 +516,7 @@ export function SubdomainProvisioningPage() {
                       onClick={handleDeleteReset}
                       className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
                     >
-                      Delete Everything
+                      Yes, Delete Everything
                     </AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>
@@ -519,16 +526,14 @@ export function SubdomainProvisioningPage() {
         </div>
 
         <div className="lg:col-span-1">
-          <div className="sticky top-6">
-            <ProvisioningStatusPanel
-              isPublished={isPublished ?? false}
-              subdomain={displaySubdomain}
-              customDomain={configuredDomain ?? null}
-              isValidated={isSubmitted}
-              hasError={!!validationError}
-              isLoadingPublished={isLoadingPublished}
-            />
-          </div>
+          <ProvisioningStatusPanel
+            subdomain={displaySubdomain}
+            customDomain={configuredDomain ?? null}
+            isValidated={isSubmitted}
+            hasError={!!validationError}
+            isPublished={!!isPublished}
+            isLoadingPublished={isLoadingPublished}
+          />
         </div>
       </div>
     </div>
